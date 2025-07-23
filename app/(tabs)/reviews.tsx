@@ -38,7 +38,8 @@ export default function ReviewsScreen() {
       customerName: 'Sarah Miller',
       rating: 5,
       title: 'Outstanding service!',
-      content: 'The team was professional, timely, and exceeded all my expectations. Highly recommend!',
+      content:
+        'The team was professional, timely, and exceeded all my expectations. Highly recommend!',
       platform: 'google',
       date: '2 days ago',
       responded: true,
@@ -49,7 +50,8 @@ export default function ReviewsScreen() {
       customerName: 'David Lee',
       rating: 4,
       title: 'Great experience overall',
-      content: 'Very satisfied with the quality of work. Minor delay but communication was excellent.',
+      content:
+        'Very satisfied with the quality of work. Minor delay but communication was excellent.',
       platform: 'facebook',
       date: '1 week ago',
       responded: false,
@@ -60,7 +62,8 @@ export default function ReviewsScreen() {
       customerName: 'Anonymous',
       rating: 2,
       title: 'Could be better',
-      content: 'Service was okay but not what I expected based on the price. Response time was slow.',
+      content:
+        'Service was okay but not what I expected based on the price. Response time was slow.',
       platform: 'yelp',
       date: '3 days ago',
       responded: false,
@@ -71,7 +74,8 @@ export default function ReviewsScreen() {
       customerName: 'Maria Rodriguez',
       rating: 5,
       title: 'Fantastic results!',
-      content: 'Amazing work! The team delivered exactly what we needed on time and within budget.',
+      content:
+        'Amazing work! The team delivered exactly what we needed on time and within budget.',
       platform: 'google',
       date: '1 week ago',
       responded: true,
@@ -108,8 +112,8 @@ export default function ReviewsScreen() {
 
       <ReviewStats stats={stats} />
 
-      <ScrollView 
-        horizontal 
+      <ScrollView
+        horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.filterContainer}
         contentContainerStyle={styles.filterContent}

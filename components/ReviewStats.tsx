@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-} from 'react-native';
-import {
-  Star,
-  TrendingUp,
-  MessageSquare,
-  Users,
-} from 'lucide-react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
+import { Star, TrendingUp, MessageSquare, Users } from 'lucide-react-native';
 
 interface ReviewStatsProps {
   stats: {
@@ -29,7 +19,7 @@ export function ReviewStats({ stats }: ReviewStatsProps) {
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
-    
+
     for (let i = 1; i <= 5; i++) {
       stars.push(
         <Star
@@ -60,7 +50,7 @@ export function ReviewStats({ stats }: ReviewStatsProps) {
             <Text style={styles.statValue}>{stats.newThisWeek}</Text>
             <Text style={styles.statLabel}>New This Week</Text>
           </View>
-          
+
           <View style={styles.statItem}>
             <MessageSquare size={18} color="#3b82f6" />
             <Text style={styles.statValue}>{stats.responseRate}%</Text>
@@ -76,12 +66,12 @@ export function ReviewStats({ stats }: ReviewStatsProps) {
             <Text style={styles.platformName}>Google</Text>
             <Text style={styles.platformRating}>{stats.googleRating}</Text>
           </View>
-          
+
           <View style={styles.platformItem}>
             <Text style={styles.platformName}>Facebook</Text>
             <Text style={styles.platformRating}>{stats.facebookRating}</Text>
           </View>
-          
+
           <View style={styles.platformItem}>
             <Text style={styles.platformName}>Yelp</Text>
             <Text style={styles.platformRating}>{stats.yelpRating}</Text>
@@ -95,18 +85,18 @@ export function ReviewStats({ stats }: ReviewStatsProps) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     marginBottom: 1,
   },
   mainStats: {
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   ratingSection: {
     flex: 1,
     alignItems: 'center',
-    paddingRight: 20,
+    paddingRight: 10,
   },
   averageRating: {
     fontSize: 36,

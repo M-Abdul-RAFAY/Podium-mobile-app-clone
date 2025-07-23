@@ -7,7 +7,16 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import { Plus, Calendar, Users, TrendingUp, Play, Pause, CreditCard as Edit, MoveVertical as MoreVertical } from 'lucide-react-native';
+import {
+  Plus,
+  Calendar,
+  Users,
+  TrendingUp,
+  Play,
+  Pause,
+  CreditCard as Edit,
+  MoveVertical as MoreVertical,
+} from 'lucide-react-native';
 import { CampaignCard } from '@/components/CampaignCard';
 import { CampaignStats } from '@/components/CampaignStats';
 
@@ -78,7 +87,7 @@ export default function CampaignsScreen() {
   const tabs = [
     { id: 'active', label: 'Active', count: 3 },
     { id: 'draft', label: 'Drafts', count: 1 },
-    { id: 'completed', label: 'Completed', count: 12 },
+    { id: 'completed', label: 'Completed', count: 0 },
   ];
 
   const stats = {
@@ -98,16 +107,13 @@ export default function CampaignsScreen() {
         </TouchableOpacity>
       </View>
 
-      <CampaignStats stats={stats} />
+      {/* <CampaignStats stats={stats} /> */}
 
       <View style={styles.tabsContainer}>
         {tabs.map((tab) => (
           <TouchableOpacity
             key={tab.id}
-            style={[
-              styles.tab,
-              selectedTab === tab.id && styles.tabActive,
-            ]}
+            style={[styles.tab, selectedTab === tab.id && styles.tabActive]}
             onPress={() => setSelectedTab(tab.id)}
           >
             <Text
@@ -124,8 +130,8 @@ export default function CampaignsScreen() {
 
       <ScrollView style={styles.campaignsList}>
         {campaigns
-          .filter((campaign) => 
-            selectedTab === 'active' 
+          .filter((campaign) =>
+            selectedTab === 'active'
               ? campaign.status === 'active'
               : selectedTab === 'draft'
               ? campaign.status === 'draft'
