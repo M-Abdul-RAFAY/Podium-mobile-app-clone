@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     backgroundColor: '#ffffff',
-    paddingBottom: 8,
+    paddingBottom: 16,
   },
   filterContent: {
     paddingHorizontal: 20,
@@ -294,8 +294,8 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   conversationsList: {
+    minHeight: '61%',
     flex: 1,
-    minHeight: 390,
     backgroundColor: '#f8fafc',
   },
   emptyState: {

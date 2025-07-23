@@ -8,7 +8,16 @@ import {
   TextInput,
   SafeAreaView,
 } from 'react-native';
-import { Search, Filter, UserPlus, Phone, Mail, MessageCircle, Star, MoveVertical as MoreVertical } from 'lucide-react-native';
+import {
+  Search,
+  Filter,
+  UserPlus,
+  Phone,
+  Mail,
+  MessageCircle,
+  Star,
+  MoveVertical as MoreVertical,
+} from 'lucide-react-native';
 import { ContactCard } from '@/components/ContactCard';
 
 interface Contact {
@@ -108,8 +117,8 @@ export default function ContactsScreen() {
         </View>
       </View>
 
-      <ScrollView 
-        horizontal 
+      <ScrollView
+        horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.filterContainer}
         contentContainerStyle={styles.filterContent}
@@ -221,6 +230,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   contactsList: {
+    minHeight: '61%',
     flex: 1,
     backgroundColor: '#f8fafc',
   },
