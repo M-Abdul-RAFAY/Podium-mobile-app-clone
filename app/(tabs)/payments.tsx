@@ -36,7 +36,7 @@ export default function PaymentsScreen() {
     {
       id: '1',
       customerName: 'Sarah Johnson',
-      amount: 450.00,
+      amount: 450.0,
       status: 'pending',
       dueDate: 'Due Today',
       description: 'Website Design Services',
@@ -45,7 +45,7 @@ export default function PaymentsScreen() {
     {
       id: '2',
       customerName: 'Mike Chen',
-      amount: 1200.00,
+      amount: 1200.0,
       status: 'paid',
       dueDate: 'Paid 2 days ago',
       description: 'Monthly Consulting Package',
@@ -55,7 +55,7 @@ export default function PaymentsScreen() {
     {
       id: '3',
       customerName: 'Emily Davis',
-      amount: 750.00,
+      amount: 750.0,
       status: 'pending',
       dueDate: 'Due in 3 days',
       description: 'Digital Marketing Campaign',
@@ -64,7 +64,7 @@ export default function PaymentsScreen() {
     {
       id: '4',
       customerName: 'Robert Wilson',
-      amount: 325.00,
+      amount: 325.0,
       status: 'failed',
       dueDate: 'Payment Failed',
       description: 'Logo Design Project',
@@ -95,16 +95,13 @@ export default function PaymentsScreen() {
         </TouchableOpacity>
       </View>
 
-      <PaymentStats stats={stats} />
+      {/* <PaymentStats stats={stats} /> */}
 
       <View style={styles.tabsContainer}>
         {tabs.map((tab) => (
           <TouchableOpacity
             key={tab.id}
-            style={[
-              styles.tab,
-              selectedTab === tab.id && styles.tabActive,
-            ]}
+            style={[styles.tab, selectedTab === tab.id && styles.tabActive]}
             onPress={() => setSelectedTab(tab.id)}
           >
             <Text

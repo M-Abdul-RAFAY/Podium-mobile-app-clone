@@ -110,7 +110,7 @@ export default function ReviewsScreen() {
         </TouchableOpacity>
       </View>
 
-      <ReviewStats stats={stats} />
+      {/* <ReviewStats stats={stats} /> */}
 
       <ScrollView
         horizontal
@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   reviewsList: {
+    minHeight: '72%',
     flex: 1,
     backgroundColor: '#f8fafc',
   },
