@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   Plus,
   Calendar,
@@ -39,6 +40,7 @@ interface Campaign {
 
 export default function CampaignsScreen() {
   const [selectedTab, setSelectedTab] = useState('active');
+  const insets = useSafeAreaInsets();
 
   const campaigns: Campaign[] = [
     {
@@ -103,7 +105,7 @@ export default function CampaignsScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Campaigns</Text>
         <TouchableOpacity style={styles.createButton}>

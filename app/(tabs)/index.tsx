@@ -8,12 +8,12 @@ import {
   TextInput,
   SafeAreaView,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   Search,
   Filter,
-  Phone,
   MessageSquare,
-  Facebook,
+  Phone,
   Mail,
   MoveVertical as MoreVertical,
   CheckCheck,
@@ -42,6 +42,7 @@ interface Conversation {
 export default function InboxScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const insets = useSafeAreaInsets();
 
   const conversations: Conversation[] = [
     {
@@ -154,15 +155,13 @@ export default function InboxScreen() {
     });
   };
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={styles.safeAreaHeader}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Inbox</Text>
-          <TouchableOpacity style={styles.filterButton}>
-            <Filter size={20} color={Colors.text.inverse} />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+    <SafeAreaView style={[styles.container, { paddingTop: insets.top }]}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Inbox</Text>
+        <TouchableOpacity style={styles.filterButton}>
+          <Filter size={20} color={Colors.text.inverse} />
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.searchContainer}>
         <View style={styles.searchInputContainer}>
@@ -228,7 +227,7 @@ export default function InboxScreen() {
           </View>
         )}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
