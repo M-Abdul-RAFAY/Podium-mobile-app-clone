@@ -154,17 +154,23 @@ export default function InboxScreen() {
     });
   };
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Inbox</Text>
-        <TouchableOpacity style={styles.filterButton}>
-          <Filter size={20} color={Colors.text.inverse} />
-        </TouchableOpacity>
-      </View>
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeAreaHeader}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Inbox</Text>
+          <TouchableOpacity style={styles.filterButton}>
+            <Filter size={20} color={Colors.text.inverse} />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
 
       <View style={styles.searchContainer}>
         <View style={styles.searchInputContainer}>
-          <Search size={20} color={Colors.neutral[500]} style={styles.searchIcon} />
+          <Search
+            size={20}
+            color={Colors.neutral[500]}
+            style={styles.searchIcon}
+          />
           <TextInput
             style={styles.searchInput}
             placeholder="Search conversations..."
@@ -175,32 +181,33 @@ export default function InboxScreen() {
         </View>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.filterContainer}
-        contentContainerStyle={styles.filterContent}
-      >
-        {filterButtons.map((filter) => (
-          <TouchableOpacity
-            key={filter.id}
-            style={[
-              styles.filterChip,
-              selectedFilter === filter.id && styles.filterChipActive,
-            ]}
-            onPress={() => setSelectedFilter(filter.id)}
-          >
-            <Text
+      <View style={styles.filterContainer}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.filterContent}
+        >
+          {filterButtons.map((filter) => (
+            <TouchableOpacity
+              key={filter.id}
               style={[
-                styles.filterChipText,
-                selectedFilter === filter.id && styles.filterChipTextActive,
+                styles.filterChip,
+                selectedFilter === filter.id && styles.filterChipActive,
               ]}
+              onPress={() => setSelectedFilter(filter.id)}
             >
-              {filter.label} ({filter.count})
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+              <Text
+                style={[
+                  styles.filterChipText,
+                  selectedFilter === filter.id && styles.filterChipTextActive,
+                ]}
+              >
+                {filter.label} ({filter.count})
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
 
       <ScrollView style={styles.conversationsList}>
         {getFilteredConversations().map((conversation) => (
@@ -221,7 +228,7 @@ export default function InboxScreen() {
           </View>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -229,6 +236,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,
+  },
+  safeAreaHeader: {
+    backgroundColor: Colors.primary[700],
   },
   header: {
     flexDirection: 'row',
@@ -276,7 +286,7 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     backgroundColor: Colors.background.primary,
-    paddingBottom: Spacing.lg,
+    paddingVertical: Spacing.sm,
   },
   filterContent: {
     paddingHorizontal: Spacing.screen.horizontal,
@@ -305,6 +315,7 @@ const styles = StyleSheet.create({
   },
   conversationsList: {
     flex: 1,
+    minHeight: 0,
     backgroundColor: Colors.background.secondary,
   },
   emptyState: {

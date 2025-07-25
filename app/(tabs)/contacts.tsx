@@ -95,22 +95,28 @@ export default function ContactsScreen() {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Contacts</Text>
-        <View style={styles.headerActions}>
-          <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color={Colors.text.inverse} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.headerButton}>
-            <UserPlus size={20} color={Colors.text.inverse} />
-          </TouchableOpacity>
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeAreaHeader}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Contacts</Text>
+          <View style={styles.headerActions}>
+            <TouchableOpacity style={styles.headerButton}>
+              <Filter size={20} color={Colors.text.inverse} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.headerButton}>
+              <UserPlus size={20} color={Colors.text.inverse} />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
 
       <View style={styles.searchContainer}>
         <View style={styles.searchInputContainer}>
-          <Search size={20} color={Colors.neutral[500]} style={styles.searchIcon} />
+          <Search
+            size={20}
+            color={Colors.neutral[500]}
+            style={styles.searchIcon}
+          />
           <TextInput
             style={styles.searchInput}
             placeholder="Search contacts..."
@@ -121,39 +127,40 @@ export default function ContactsScreen() {
         </View>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.filterContainer}
-        contentContainerStyle={styles.filterContent}
-      >
-        {filterOptions.map((filter) => (
-          <TouchableOpacity
-            key={filter.id}
-            style={[
-              styles.filterChip,
-              selectedFilter === filter.id && styles.filterChipActive,
-            ]}
-            onPress={() => setSelectedFilter(filter.id)}
-          >
-            <Text
+      <View style={styles.filterContainer}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.filterContent}
+        >
+          {filterOptions.map((filter) => (
+            <TouchableOpacity
+              key={filter.id}
               style={[
-                styles.filterChipText,
-                selectedFilter === filter.id && styles.filterChipTextActive,
+                styles.filterChip,
+                selectedFilter === filter.id && styles.filterChipActive,
               ]}
+              onPress={() => setSelectedFilter(filter.id)}
             >
-              {filter.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+              <Text
+                style={[
+                  styles.filterChipText,
+                  selectedFilter === filter.id && styles.filterChipTextActive,
+                ]}
+              >
+                {filter.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
 
       <ScrollView style={styles.contactsList}>
         {contacts.map((contact) => (
           <ContactCard key={contact.id} contact={contact} />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -161,6 +168,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,
+  },
+  safeAreaHeader: {
+    backgroundColor: Colors.primary[700],
   },
   header: {
     flexDirection: 'row',
@@ -212,7 +222,7 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     backgroundColor: Colors.background.primary,
-    paddingBottom: Spacing.lg,
+    paddingVertical: Spacing.sm,
   },
   filterContent: {
     paddingHorizontal: Spacing.screen.horizontal,
@@ -241,6 +251,7 @@ const styles = StyleSheet.create({
   },
   contactsList: {
     flex: 1,
+    minHeight: 0,
     backgroundColor: Colors.background.secondary,
   },
 });

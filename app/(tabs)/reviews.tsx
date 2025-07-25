@@ -106,49 +106,52 @@ export default function ReviewsScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Reviews</Text>
-        <TouchableOpacity style={styles.filterButton}>
-          <Filter size={20} color={Colors.text.inverse} />
-        </TouchableOpacity>
-      </View>
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeAreaHeader}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Reviews</Text>
+          <TouchableOpacity style={styles.filterButton}>
+            <Filter size={20} color={Colors.text.inverse} />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
 
       {/* <ReviewStats stats={stats} /> */}
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.filterContainer}
-        contentContainerStyle={styles.filterContent}
-      >
-        {filterOptions.map((filter) => (
-          <TouchableOpacity
-            key={filter.id}
-            style={[
-              styles.filterChip,
-              selectedFilter === filter.id && styles.filterChipActive,
-            ]}
-            onPress={() => setSelectedFilter(filter.id)}
-          >
-            <Text
+      <View style={styles.filterContainer}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.filterContent}
+        >
+          {filterOptions.map((filter) => (
+            <TouchableOpacity
+              key={filter.id}
               style={[
-                styles.filterChipText,
-                selectedFilter === filter.id && styles.filterChipTextActive,
+                styles.filterChip,
+                selectedFilter === filter.id && styles.filterChipActive,
               ]}
+              onPress={() => setSelectedFilter(filter.id)}
             >
-              {filter.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+              <Text
+                style={[
+                  styles.filterChipText,
+                  selectedFilter === filter.id && styles.filterChipTextActive,
+                ]}
+              >
+                {filter.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
 
       <ScrollView style={styles.reviewsList}>
         {reviews.map((review) => (
           <ReviewCard key={review.id} review={review} />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -156,6 +159,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,
+  },
+  safeAreaHeader: {
+    backgroundColor: Colors.primary[700],
   },
   header: {
     flexDirection: 'row',
@@ -179,7 +185,7 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     backgroundColor: Colors.background.primary,
-    paddingVertical: Spacing.lg,
+    paddingVertical: Spacing.sm,
   },
   filterContent: {
     paddingHorizontal: Spacing.screen.horizontal,
@@ -208,6 +214,7 @@ const styles = StyleSheet.create({
   },
   reviewsList: {
     flex: 1,
+    minHeight: 0,
     backgroundColor: Colors.background.secondary,
   },
 });
