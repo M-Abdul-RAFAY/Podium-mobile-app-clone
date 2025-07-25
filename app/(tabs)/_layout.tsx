@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import { StyleSheet, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   MessageCircle,
   Users,
@@ -13,11 +14,16 @@ import { Spacing } from '@/constants/Spacing';
 import { Shadows } from '@/constants/Shadows';
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: [
+          styles.tabBar,
+          { paddingBottom: insets.bottom + Spacing.sm },
+        ],
         tabBarActiveTintColor: Colors.primary[600],
         tabBarInactiveTintColor: Colors.neutral[500],
         tabBarLabelStyle: styles.tabLabel,
@@ -76,15 +82,9 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.border.light,
     height: Platform.select({
       ios: 85,
-      android: 70,
+      android: 80,
       web: 70,
       default: 70,
-    }),
-    paddingBottom: Platform.select({
-      ios: Spacing.xl,
-      android: Spacing.md,
-      web: Spacing.md,
-      default: Spacing.md,
     }),
     paddingTop: Spacing.md,
     paddingHorizontal: Spacing.xs,
