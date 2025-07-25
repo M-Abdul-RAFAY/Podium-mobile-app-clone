@@ -9,11 +9,13 @@
     "lint": "expo lint"
   },
   "dependencies": {
+    "@clerk/clerk-expo": "^2.14.11",
     "@expo/vector-icons": "^14.1.0",
     "@lucide/lab": "^0.1.2",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "expo": "53.0.20",
+    "expo-auth-session": "^6.2.1",
     "expo-blur": "~14.1.5",
     "expo-camera": "~16.1.11",
     "expo-constants": "~17.1.7",
@@ -22,6 +24,7 @@
     "expo-linear-gradient": "~14.1.5",
     "expo-linking": "~7.1.7",
     "expo-router": "~5.1.4",
+    "expo-secure-store": "^14.2.3",
     "expo-splash-screen": "~0.30.10",
     "expo-status-bar": "~2.2.3",
     "expo-symbols": "~0.4.5",

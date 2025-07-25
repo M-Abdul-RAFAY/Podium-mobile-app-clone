@@ -1,19 +1,26 @@
-import { useEffect } from 'react';
+import React from 'react';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useFrameworkReady } from '@/hooks/useFrameworkReady';
+import { ClerkProvider } from '@clerk/clerk-expo';
+import { StatusBar } from 'expo-status-bar';
+
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+
+if (!publishableKey) {
+  throw new Error('Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env');
+}
 
 export default function RootLayout() {
-  useFrameworkReady();
-
   return (
-    <SafeAreaProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="light" />
-    </SafeAreaProvider>
+    <ClerkProvider publishableKey={publishableKey}>
+      <SafeAreaProvider>
+        <StatusBar style="auto" />
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </SafeAreaProvider>
+    </ClerkProvider>
   );
 }

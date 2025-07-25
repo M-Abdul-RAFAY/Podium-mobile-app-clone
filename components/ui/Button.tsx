@@ -63,9 +63,7 @@ export function Button({
       {loading ? (
         <ActivityIndicator
           size="small"
-          color={
-            variant === 'primary' ? Colors.text.inverse : Colors.primary[600]
-          }
+          color={variant === 'primary' ? Colors.text.inverse : Colors.primary[600]}
         />
       ) : (
         <>
@@ -87,7 +85,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     ...Shadows.small,
   },
-
+  
   // Variants
   primary: {
     backgroundColor: Colors.primary[600],
@@ -103,7 +101,7 @@ const styles = StyleSheet.create({
   ghost: {
     backgroundColor: 'transparent',
   },
-
+  
   // Sizes
   sm: {
     paddingHorizontal: Spacing.lg,
@@ -120,13 +118,13 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.xl,
     minHeight: 56,
   },
-
+  
   // Text styles
   text: {
     fontFamily: Typography.fontFamily.medium,
     textAlign: 'center',
   },
-
+  
   primaryText: {
     color: Colors.text.inverse,
     fontWeight: Typography.fontWeight.semibold,
@@ -143,7 +141,7 @@ const styles = StyleSheet.create({
     color: Colors.primary[600],
     fontWeight: Typography.fontWeight.medium,
   },
-
+  
   smText: {
     fontSize: Typography.fontSize.sm,
   },
@@ -153,7 +151,7 @@ const styles = StyleSheet.create({
   lgText: {
     fontSize: Typography.fontSize.lg,
   },
-
+  
   // Disabled states
   disabled: {
     opacity: 0.5,

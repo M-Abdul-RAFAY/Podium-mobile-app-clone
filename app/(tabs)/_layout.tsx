@@ -1,6 +1,8 @@
-import { Tabs } from 'expo-router';
-import { StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import { Tabs, Redirect } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleSheet, Platform } from 'react-native';
+import { useAuth } from '@clerk/clerk-expo';
 import {
   MessageCircle,
   Users,
@@ -14,16 +16,18 @@ import { Spacing } from '@/constants/Spacing';
 import { Shadows } from '@/constants/Shadows';
 
 export default function TabLayout() {
+  const { isSignedIn } = useAuth();
   const insets = useSafeAreaInsets();
+
+  if (!isSignedIn) {
+    return <Redirect href="/(auth)/sign-in" />;
+  }
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: [
-          styles.tabBar,
-          { paddingBottom: insets.bottom + Spacing.sm },
-        ],
+        tabBarStyle: [styles.tabBar, { paddingBottom: insets.bottom + Spacing.sm }],
         tabBarActiveTintColor: Colors.primary[600],
         tabBarInactiveTintColor: Colors.neutral[500],
         tabBarLabelStyle: styles.tabLabel,
