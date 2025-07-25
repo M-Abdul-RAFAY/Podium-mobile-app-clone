@@ -19,6 +19,10 @@ import {
 } from 'lucide-react-native';
 import { CampaignCard } from '@/components/CampaignCard';
 import { CampaignStats } from '@/components/CampaignStats';
+import { Colors } from '@/constants/Colors';
+import { Typography } from '@/constants/Typography';
+import { Spacing } from '@/constants/Spacing';
+import { Shadows } from '@/constants/Shadows';
 
 interface Campaign {
   id: string;
@@ -103,7 +107,7 @@ export default function CampaignsScreen() {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Campaigns</Text>
         <TouchableOpacity style={styles.createButton}>
-          <Plus size={20} color="#ffffff" />
+          <Plus size={20} color={Colors.text.inverse} />
         </TouchableOpacity>
       </View>
 
@@ -148,53 +152,56 @@ export default function CampaignsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: Colors.background.secondary,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: '#1e3a8a',
+    paddingHorizontal: Spacing.screen.horizontal,
+    paddingVertical: Spacing.screen.vertical,
+    backgroundColor: Colors.primary[600],
+    ...Shadows.small,
   },
   headerTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#ffffff',
+    fontSize: Typography.fontSize['2xl'],
+    fontWeight: Typography.fontWeight.bold,
+    fontFamily: Typography.fontFamily.bold,
+    color: Colors.text.inverse,
   },
   createButton: {
-    padding: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 8,
+    padding: Spacing.sm,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderRadius: 12,
   },
   tabsContainer: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
+    backgroundColor: Colors.background.primary,
+    paddingHorizontal: Spacing.screen.horizontal,
+    paddingVertical: Spacing.lg,
   },
   tab: {
     flex: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.lg,
+    borderRadius: 12,
     alignItems: 'center',
-    marginHorizontal: 4,
+    marginHorizontal: Spacing.xs,
   },
   tabActive: {
-    backgroundColor: '#1e3a8a',
+    backgroundColor: Colors.primary[600],
   },
   tabText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#6b7280',
+    fontSize: Typography.fontSize.sm,
+    fontWeight: Typography.fontWeight.semibold,
+    fontFamily: Typography.fontFamily.medium,
+    color: Colors.text.secondary,
   },
   tabTextActive: {
-    color: '#ffffff',
+    color: Colors.text.inverse,
   },
   campaignsList: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: Colors.background.secondary,
   },
 });

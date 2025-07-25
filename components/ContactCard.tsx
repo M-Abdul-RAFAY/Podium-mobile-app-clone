@@ -7,6 +7,12 @@ import {
   Platform,
 } from 'react-native';
 import { Phone, Mail, MessageCircle, Star, MoveVertical as MoreVertical } from 'lucide-react-native';
+import { Colors } from '@/constants/Colors';
+import { Typography } from '@/constants/Typography';
+import { Spacing } from '@/constants/Spacing';
+import { Card } from './ui/Card';
+import { Avatar } from './ui/Avatar';
+import { Badge } from './ui/Badge';
 
 interface Contact {
   id: string;
@@ -26,14 +32,6 @@ interface ContactCardProps {
 }
 
 export function ContactCard({ contact }: ContactCardProps) {
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
 
   const renderStars = (rating: number) => {
     const stars = [];
@@ -42,8 +40,8 @@ export function ContactCard({ contact }: ContactCardProps) {
         <Star
           key={i}
           size={12}
-          color={i <= rating ? '#fbbf24' : '#e5e7eb'}
-          fill={i <= rating ? '#fbbf24' : 'transparent'}
+          color={i <= rating ? Colors.warning[500] : Colors.neutral[300]}
+          fill={i <= rating ? Colors.warning[500] : 'transparent'}
         />
       );
     }
@@ -51,14 +49,11 @@ export function ContactCard({ contact }: ContactCardProps) {
   };
 
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.7}>
+    <TouchableOpacity activeOpacity={0.7}>
+      <Card style={styles.container}>
       <View style={styles.header}>
         <View style={styles.avatarContainer}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>
-              {getInitials(contact.name)}
-            </Text>
-          </View>
+          <Avatar name={contact.name} size="lg" />
           <View style={styles.contactInfo}>
             <Text style={styles.name} numberOfLines={1}>
               {contact.name}
@@ -72,17 +67,17 @@ export function ContactCard({ contact }: ContactCardProps) {
         </View>
         
         <TouchableOpacity style={styles.menuButton}>
-          <MoreVertical size={20} color="#9ca3af" />
+          <MoreVertical size={20} color={Colors.neutral[400]} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.contactDetails}>
         <View style={styles.contactRow}>
-          <Phone size={14} color="#6b7280" />
+          <Phone size={14} color={Colors.neutral[500]} />
           <Text style={styles.contactText}>{contact.phone}</Text>
         </View>
         <View style={styles.contactRow}>
-          <Mail size={14} color="#6b7280" />
+          <Mail size={14} color={Colors.neutral[500]} />
           <Text style={styles.contactText} numberOfLines={1}>
             {contact.email}
           </Text>
@@ -91,7 +86,7 @@ export function ContactCard({ contact }: ContactCardProps) {
 
       <View style={styles.statsRow}>
         <View style={styles.statItem}>
-          <MessageCircle size={16} color="#3b82f6" />
+          <MessageCircle size={16} color={Colors.primary[500]} />
           <Text style={styles.statText}>{contact.totalMessages} messages</Text>
         </View>
         <View style={styles.statItem}>
@@ -102,9 +97,7 @@ export function ContactCard({ contact }: ContactCardProps) {
       <View style={styles.footer}>
         <View style={styles.tagsContainer}>
           {contact.tags.map((tag, index) => (
-            <View key={index} style={styles.tag}>
-              <Text style={styles.tagText}>{tag}</Text>
-            </View>
+            <Badge key={index} label={tag} size="sm" variant="primary" />
           ))}
         </View>
         
@@ -115,154 +108,122 @@ export function ContactCard({ contact }: ContactCardProps) {
 
       <View style={styles.actions}>
         <TouchableOpacity style={styles.actionButton}>
-          <Phone size={18} color="#1e3a8a" />
+          <Phone size={18} color={Colors.primary[600]} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>
-          <MessageCircle size={18} color="#1e3a8a" />
+          <MessageCircle size={18} color={Colors.primary[600]} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>
-          <Mail size={18} color="#1e3a8a" />
+          <Mail size={18} color={Colors.primary[600]} />
         </TouchableOpacity>
       </View>
+      </Card>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
-    marginHorizontal: 16,
-    marginVertical: 8,
-    borderRadius: 16,
-    padding: 20,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    marginHorizontal: Spacing.lg,
+    marginVertical: Spacing.sm,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 16,
+    marginBottom: Spacing.lg,
   },
   avatarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
   },
-  avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#e0e7ff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
-  },
-  avatarText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1e3a8a',
-  },
   contactInfo: {
     flex: 1,
+    marginLeft: Spacing.lg,
   },
   name: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1f2937',
-    marginBottom: 2,
+    fontSize: Typography.fontSize.lg,
+    fontWeight: Typography.fontWeight.semibold,
+    fontFamily: Typography.fontFamily.medium,
+    color: Colors.text.primary,
+    marginBottom: Spacing.xs / 2,
   },
   company: {
-    fontSize: 14,
-    color: '#6b7280',
+    fontSize: Typography.fontSize.sm,
+    fontFamily: Typography.fontFamily.regular,
+    color: Colors.text.secondary,
   },
   menuButton: {
-    padding: 4,
+    padding: Spacing.xs,
   },
   contactDetails: {
-    marginBottom: 16,
+    marginBottom: Spacing.lg,
   },
   contactRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: Spacing.sm,
   },
   contactText: {
-    fontSize: 14,
-    color: '#4b5563',
-    marginLeft: 8,
+    fontSize: Typography.fontSize.sm,
+    fontFamily: Typography.fontFamily.regular,
+    color: Colors.text.secondary,
+    marginLeft: Spacing.sm,
     flex: 1,
   },
   statsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
-    paddingVertical: 8,
+    marginBottom: Spacing.lg,
+    paddingVertical: Spacing.sm,
     borderTopWidth: 1,
-    borderTopColor: '#f1f5f9',
+    borderTopColor: Colors.border.light,
   },
   statItem: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   statText: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginLeft: 6,
+    fontSize: Typography.fontSize.xs,
+    fontFamily: Typography.fontFamily.regular,
+    color: Colors.text.tertiary,
+    marginLeft: Spacing.sm,
   },
   lastContactText: {
-    fontSize: 12,
-    color: '#6b7280',
+    fontSize: Typography.fontSize.xs,
+    fontFamily: Typography.fontFamily.regular,
+    color: Colors.text.tertiary,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: Spacing.lg,
   },
   tagsContainer: {
     flexDirection: 'row',
     flex: 1,
-  },
-  tag: {
-    backgroundColor: '#dbeafe',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-    marginRight: 8,
-  },
-  tagText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: '#1e3a8a',
+    gap: Spacing.sm,
   },
   ratingContainer: {
     flexDirection: 'row',
-    gap: 2,
+    gap: Spacing.xs / 2,
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 24,
-    paddingTop: 16,
+    gap: Spacing['2xl'],
+    paddingTop: Spacing.lg,
     borderTopWidth: 1,
-    borderTopColor: '#f1f5f9',
+    borderTopColor: Colors.border.light,
   },
   actionButton: {
-    padding: 12,
-    backgroundColor: '#f8fafc',
+    padding: Spacing.md,
+    backgroundColor: Colors.background.tertiary,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: Colors.border.medium,
   },
 });

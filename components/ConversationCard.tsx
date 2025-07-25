@@ -8,6 +8,11 @@ import {
 } from 'react-native';
 import { Phone, MessageSquare, Facebook, Mail, MoveVertical as MoreVertical } from 'lucide-react-native';
 import { MessageStatusIcon } from './MessageStatusIcon';
+import { Colors } from '@/constants/Colors';
+import { Typography } from '@/constants/Typography';
+import { Spacing } from '@/constants/Spacing';
+import { Shadows } from '@/constants/Shadows';
+import { Avatar } from './ui/Avatar';
 
 interface Conversation {
   id: string;
@@ -27,37 +32,26 @@ interface ConversationCardProps {
 
 export function ConversationCard({ conversation, onPress }: ConversationCardProps) {
   const getChannelIcon = () => {
+    const iconSize = 16;
     switch (conversation.channel) {
       case 'sms':
-        return <Phone size={16} color="#10b981" />;
+        return <Phone size={iconSize} color={Colors.channels.sms} />;
       case 'webchat':
-        return <MessageSquare size={16} color="#3b82f6" />;
+        return <MessageSquare size={iconSize} color={Colors.channels.webchat} />;
       case 'facebook':
-        return <Facebook size={16} color="#1877f2" />;
+        return <Facebook size={iconSize} color={Colors.channels.facebook} />;
       case 'email':
-        return <Mail size={16} color="#6366f1" />;
+        return <Mail size={iconSize} color={Colors.channels.email} />;
       default:
-        return <MessageSquare size={16} color="#6b7280" />;
+        return <MessageSquare size={iconSize} color={Colors.neutral[500]} />;
     }
   };
 
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
 
   return (
     <TouchableOpacity style={styles.container} activeOpacity={0.7} onPress={onPress}>
       <View style={styles.avatarContainer}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>
-            {getInitials(conversation.customerName)}
-          </Text>
-        </View>
+        <Avatar name={conversation.customerName} size="lg" />
         <View style={styles.channelBadge}>
           {getChannelIcon()}
         </View>
@@ -89,7 +83,7 @@ export function ConversationCard({ conversation, onPress }: ConversationCardProp
       </View>
 
       <TouchableOpacity style={styles.menuButton}>
-        <MoreVertical size={20} color="#9ca3af" />
+        <MoreVertical size={20} color={Colors.neutral[400]} />
       </TouchableOpacity>
     </TouchableOpacity>
   );
@@ -99,39 +93,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
+    backgroundColor: Colors.background.primary,
+    paddingHorizontal: Spacing.screen.horizontal,
+    paddingVertical: Spacing.lg,
     borderBottomWidth: 1,
-    borderBottomColor: '#f1f5f9',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 2,
-      },
-      android: {
-        elevation: 1,
-      },
-    }),
+    borderBottomColor: Colors.border.light,
   },
   avatarContainer: {
     position: 'relative',
-    marginRight: 16,
-  },
-  avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#e0e7ff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1e3a8a',
+    marginRight: Spacing.lg,
   },
   channelBadge: {
     position: 'absolute',
@@ -140,36 +110,39 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.background.primary,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: '#ffffff',
+    borderColor: Colors.background.primary,
+    ...Shadows.small,
   },
   contentContainer: {
     flex: 1,
-    marginRight: 12,
+    marginRight: Spacing.md,
   },
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: Spacing.xs,
   },
   customerName: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1f2937',
+    fontSize: Typography.fontSize.base,
+    fontWeight: Typography.fontWeight.semibold,
+    fontFamily: Typography.fontFamily.medium,
+    color: Colors.text.primary,
     flex: 1,
   },
   timestampContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: Spacing.sm,
   },
   timestamp: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginRight: 6,
+    fontSize: Typography.fontSize.xs,
+    fontFamily: Typography.fontFamily.regular,
+    color: Colors.text.tertiary,
   },
   messageRow: {
     flexDirection: 'row',
@@ -177,26 +150,28 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   lastMessage: {
-    fontSize: 14,
-    color: '#6b7280',
+    fontSize: Typography.fontSize.sm,
+    fontFamily: Typography.fontFamily.regular,
+    color: Colors.text.secondary,
     flex: 1,
-    lineHeight: 20,
+    lineHeight: Typography.fontSize.sm * Typography.lineHeight.normal,
   },
   unreadBadge: {
-    backgroundColor: '#dc2626',
+    backgroundColor: Colors.error[500],
     borderRadius: 10,
     minWidth: 20,
     height: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 8,
+    marginLeft: Spacing.sm,
   },
   unreadCount: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#ffffff',
+    fontSize: Typography.fontSize.xs,
+    fontWeight: Typography.fontWeight.semibold,
+    fontFamily: Typography.fontFamily.medium,
+    color: Colors.text.inverse,
   },
   menuButton: {
-    padding: 4,
+    padding: Spacing.xs,
   },
 });

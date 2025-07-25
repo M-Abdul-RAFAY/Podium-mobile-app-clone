@@ -19,6 +19,10 @@ import {
   MoveVertical as MoreVertical,
 } from 'lucide-react-native';
 import { ContactCard } from '@/components/ContactCard';
+import { Colors } from '@/constants/Colors';
+import { Typography } from '@/constants/Typography';
+import { Spacing } from '@/constants/Spacing';
+import { Shadows } from '@/constants/Shadows';
 
 interface Contact {
   id: string;
@@ -96,23 +100,23 @@ export default function ContactsScreen() {
         <Text style={styles.headerTitle}>Contacts</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color="#ffffff" />
+            <Filter size={20} color={Colors.text.inverse} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
-            <UserPlus size={20} color="#ffffff" />
+            <UserPlus size={20} color={Colors.text.inverse} />
           </TouchableOpacity>
         </View>
       </View>
 
       <View style={styles.searchContainer}>
         <View style={styles.searchInputContainer}>
-          <Search size={20} color="#6b7280" style={styles.searchIcon} />
+          <Search size={20} color={Colors.neutral[500]} style={styles.searchIcon} />
           <TextInput
             style={styles.searchInput}
             placeholder="Search contacts..."
             value={searchQuery}
             onChangeText={setSearchQuery}
-            placeholderTextColor="#9ca3af"
+            placeholderTextColor={Colors.neutral[400]}
           />
         </View>
       </View>
@@ -156,82 +160,87 @@ export default function ContactsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: Colors.background.secondary,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: '#1e3a8a',
+    paddingHorizontal: Spacing.screen.horizontal,
+    paddingVertical: Spacing.screen.vertical,
+    backgroundColor: Colors.primary[600],
+    ...Shadows.small,
   },
   headerTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#ffffff',
+    fontSize: Typography.fontSize['2xl'],
+    fontWeight: Typography.fontWeight.bold,
+    fontFamily: Typography.fontFamily.bold,
+    color: Colors.text.inverse,
   },
   headerActions: {
     flexDirection: 'row',
-    gap: 12,
+    gap: Spacing.md,
   },
   headerButton: {
-    padding: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 8,
+    padding: Spacing.sm,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderRadius: 12,
   },
   searchContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: '#ffffff',
+    paddingHorizontal: Spacing.screen.horizontal,
+    paddingVertical: Spacing.screen.vertical,
+    backgroundColor: Colors.background.primary,
   },
   searchInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f1f5f9',
+    backgroundColor: Colors.background.tertiary,
     borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.border.light,
   },
   searchIcon: {
-    marginRight: 12,
+    marginRight: Spacing.md,
   },
   searchInput: {
     flex: 1,
-    fontSize: 16,
-    color: '#1f2937',
+    fontSize: Typography.fontSize.base,
+    fontFamily: Typography.fontFamily.regular,
+    color: Colors.text.primary,
   },
   filterContainer: {
-    backgroundColor: '#ffffff',
-    paddingBottom: 16,
+    backgroundColor: Colors.background.primary,
+    paddingBottom: Spacing.lg,
   },
   filterContent: {
-    paddingHorizontal: 20,
+    paddingHorizontal: Spacing.screen.horizontal,
   },
   filterChip: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginRight: 12,
-    backgroundColor: '#f1f5f9',
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.sm,
+    marginRight: Spacing.md,
+    backgroundColor: Colors.background.tertiary,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: Colors.border.medium,
   },
   filterChipActive: {
-    backgroundColor: '#1e3a8a',
-    borderColor: '#1e3a8a',
+    backgroundColor: Colors.primary[600],
+    borderColor: Colors.primary[600],
   },
   filterChipText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#64748b',
+    fontSize: Typography.fontSize.sm,
+    fontWeight: Typography.fontWeight.semibold,
+    fontFamily: Typography.fontFamily.medium,
+    color: Colors.text.secondary,
   },
   filterChipTextActive: {
-    color: '#ffffff',
+    color: Colors.text.inverse,
   },
   contactsList: {
-    minHeight: '61%',
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: Colors.background.secondary,
   },
 });

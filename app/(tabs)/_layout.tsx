@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import {
   MessageCircle,
   Users,
@@ -7,6 +7,10 @@ import {
   Star,
   CreditCard,
 } from 'lucide-react-native';
+import { Colors } from '@/constants/Colors';
+import { Typography } from '@/constants/Typography';
+import { Spacing } from '@/constants/Spacing';
+import { Shadows } from '@/constants/Shadows';
 
 export default function TabLayout() {
   return (
@@ -14,9 +18,10 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: '#1e3a8a',
-        tabBarInactiveTintColor: '#6b7280',
+        tabBarActiveTintColor: Colors.primary[600],
+        tabBarInactiveTintColor: Colors.neutral[500],
         tabBarLabelStyle: styles.tabLabel,
+        tabBarItemStyle: styles.tabItem,
       }}
     >
       <Tabs.Screen
@@ -66,24 +71,32 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.background.primary,
     borderTopWidth: 1,
-    borderTopColor: '#e5e7eb',
-    height: 85,
-    paddingBottom: 20,
-    paddingTop: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: -2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 10,
+    borderTopColor: Colors.border.light,
+    height: Platform.select({
+      ios: 85,
+      android: 70,
+      web: 70,
+      default: 70,
+    }),
+    paddingBottom: Platform.select({
+      ios: Spacing.xl,
+      android: Spacing.md,
+      web: Spacing.md,
+      default: Spacing.md,
+    }),
+    paddingTop: Spacing.md,
+    paddingHorizontal: Spacing.xs,
+    ...Shadows.tab,
+  },
+  tabItem: {
+    paddingVertical: Spacing.xs,
   },
   tabLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-    marginTop: 2,
+    fontSize: Typography.fontSize.xs,
+    fontWeight: Typography.fontWeight.semibold,
+    fontFamily: Typography.fontFamily.medium,
+    marginTop: Spacing.xs / 2,
   },
 });

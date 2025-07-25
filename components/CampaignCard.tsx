@@ -7,6 +7,10 @@ import {
   Platform,
 } from 'react-native';
 import { MessageSquare, Mail, Zap, Play, Pause, Calendar, Users, Eye, MessageCircle, MoveVertical as MoreVertical } from 'lucide-react-native';
+import { Colors } from '@/constants/Colors';
+import { Typography } from '@/constants/Typography';
+import { Spacing } from '@/constants/Spacing';
+import { Card } from './ui/Card';
 
 interface Campaign {
   id: string;
@@ -27,30 +31,31 @@ interface CampaignCardProps {
 
 export function CampaignCard({ campaign }: CampaignCardProps) {
   const getTypeIcon = () => {
+    const iconSize = 18;
     switch (campaign.type) {
       case 'sms':
-        return <MessageSquare size={18} color="#10b981" />;
+        return <MessageSquare size={iconSize} color={Colors.success[500]} />;
       case 'email':
-        return <Mail size={18} color="#3b82f6" />;
+        return <Mail size={iconSize} color={Colors.primary[500]} />;
       case 'automation':
-        return <Zap size={18} color="#f59e0b" />;
+        return <Zap size={iconSize} color={Colors.warning[500]} />;
       default:
-        return <MessageSquare size={18} color="#6b7280" />;
+        return <MessageSquare size={iconSize} color={Colors.neutral[500]} />;
     }
   };
 
   const getStatusColor = () => {
     switch (campaign.status) {
       case 'active':
-        return '#10b981';
+        return Colors.success[500];
       case 'paused':
-        return '#f59e0b';
+        return Colors.warning[500];
       case 'draft':
-        return '#6b7280';
+        return Colors.neutral[500];
       case 'completed':
-        return '#3b82f6';
+        return Colors.primary[500];
       default:
-        return '#6b7280';
+        return Colors.neutral[500];
     }
   };
 
@@ -63,7 +68,8 @@ export function CampaignCard({ campaign }: CampaignCardProps) {
   };
 
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.7}>
+    <TouchableOpacity activeOpacity={0.7}>
+      <Card style={styles.container}>
       <View style={styles.header}>
         <View style={styles.titleRow}>
           <View style={styles.typeContainer}>
@@ -81,26 +87,26 @@ export function CampaignCard({ campaign }: CampaignCardProps) {
         </View>
         
         <TouchableOpacity style={styles.menuButton}>
-          <MoreVertical size={20} color="#9ca3af" />
+          <MoreVertical size={20} color={Colors.neutral[400]} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.metricsContainer}>
         <View style={styles.metricRow}>
           <View style={styles.metric}>
-            <Users size={16} color="#6b7280" />
+            <Users size={16} color={Colors.neutral[500]} />
             <Text style={styles.metricValue}>{campaign.recipients}</Text>
             <Text style={styles.metricLabel}>Recipients</Text>
           </View>
           
           <View style={styles.metric}>
-            <Eye size={16} color="#6b7280" />
+            <Eye size={16} color={Colors.neutral[500]} />
             <Text style={styles.metricValue}>{getOpenRate()}%</Text>
             <Text style={styles.metricLabel}>Open Rate</Text>
           </View>
           
           <View style={styles.metric}>
-            <MessageCircle size={16} color="#6b7280" />
+            <MessageCircle size={16} color={Colors.neutral[500]} />
             <Text style={styles.metricValue}>{getResponseRate()}%</Text>
             <Text style={styles.metricLabel}>Response</Text>
           </View>
@@ -109,7 +115,7 @@ export function CampaignCard({ campaign }: CampaignCardProps) {
 
       <View style={styles.footer}>
         <View style={styles.activityContainer}>
-          <Calendar size={14} color="#6b7280" />
+          <Calendar size={14} color={Colors.neutral[500]} />
           <Text style={styles.activityText}>
             {campaign.scheduledDate 
               ? `Scheduled: ${campaign.scheduledDate}`
@@ -121,43 +127,30 @@ export function CampaignCard({ campaign }: CampaignCardProps) {
         <View style={styles.actions}>
           {campaign.status === 'active' ? (
             <TouchableOpacity style={styles.actionButton}>
-              <Pause size={16} color="#f59e0b" />
+              <Pause size={16} color={Colors.warning[500]} />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity style={styles.actionButton}>
-              <Play size={16} color="#10b981" />
+              <Play size={16} color={Colors.success[500]} />
             </TouchableOpacity>
           )}
         </View>
       </View>
+      </Card>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
-    marginHorizontal: 16,
-    marginVertical: 8,
-    borderRadius: 16,
-    padding: 20,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    marginHorizontal: Spacing.lg,
+    marginVertical: Spacing.sm,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 16,
+    marginBottom: Spacing.lg,
   },
   titleRow: {
     flexDirection: 'row',
@@ -166,7 +159,7 @@ const styles = StyleSheet.create({
   },
   typeContainer: {
     position: 'relative',
-    marginRight: 16,
+    marginRight: Spacing.lg,
   },
   statusDot: {
     position: 'absolute',
@@ -176,27 +169,29 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: '#ffffff',
+    borderColor: Colors.background.primary,
   },
   titleContainer: {
     flex: 1,
   },
   campaignName: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1f2937',
-    marginBottom: 2,
+    fontSize: Typography.fontSize.base,
+    fontWeight: Typography.fontWeight.semibold,
+    fontFamily: Typography.fontFamily.medium,
+    color: Colors.text.primary,
+    marginBottom: Spacing.xs / 2,
   },
   campaignType: {
-    fontSize: 12,
-    color: '#6b7280',
-    fontWeight: '500',
+    fontSize: Typography.fontSize.xs,
+    fontFamily: Typography.fontFamily.regular,
+    color: Colors.text.tertiary,
+    fontWeight: Typography.fontWeight.medium,
   },
   menuButton: {
-    padding: 4,
+    padding: Spacing.xs,
   },
   metricsContainer: {
-    marginBottom: 16,
+    marginBottom: Spacing.lg,
   },
   metricRow: {
     flexDirection: 'row',
@@ -207,23 +202,25 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   metricValue: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#1f2937',
-    marginTop: 4,
-    marginBottom: 2,
+    fontSize: Typography.fontSize.lg,
+    fontWeight: Typography.fontWeight.bold,
+    fontFamily: Typography.fontFamily.bold,
+    color: Colors.text.primary,
+    marginTop: Spacing.xs,
+    marginBottom: Spacing.xs / 2,
   },
   metricLabel: {
-    fontSize: 12,
-    color: '#6b7280',
+    fontSize: Typography.fontSize.xs,
+    fontFamily: Typography.fontFamily.regular,
+    color: Colors.text.tertiary,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 16,
+    paddingTop: Spacing.lg,
     borderTopWidth: 1,
-    borderTopColor: '#f1f5f9',
+    borderTopColor: Colors.border.light,
   },
   activityContainer: {
     flexDirection: 'row',
@@ -231,19 +228,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   activityText: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginLeft: 6,
+    fontSize: Typography.fontSize.xs,
+    fontFamily: Typography.fontFamily.regular,
+    color: Colors.text.tertiary,
+    marginLeft: Spacing.sm,
   },
   actions: {
     flexDirection: 'row',
-    gap: 8,
+    gap: Spacing.sm,
   },
   actionButton: {
-    padding: 8,
-    backgroundColor: '#f8fafc',
-    borderRadius: 8,
+    padding: Spacing.sm,
+    backgroundColor: Colors.background.tertiary,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: Colors.border.medium,
   },
 });

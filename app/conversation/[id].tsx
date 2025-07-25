@@ -13,6 +13,11 @@ import {
 import { useLocalSearchParams, router } from 'expo-router';
 import { ArrowLeft, Send, Paperclip, Phone, MessageSquare, Facebook, Mail, MoveVertical as MoreVertical, Info } from 'lucide-react-native';
 import { MessageBubble } from '@/components/MessageBubble';
+import { Colors } from '@/constants/Colors';
+import { Typography } from '@/constants/Typography';
+import { Spacing } from '@/constants/Spacing';
+import { Shadows } from '@/constants/Shadows';
+import { Avatar } from '@/components/ui/Avatar';
 
 interface Message {
   id: string;
@@ -84,17 +89,18 @@ export default function ConversationScreen() {
   ]);
 
   const getChannelIcon = () => {
+    const iconSize = 18;
     switch (channel) {
       case 'sms':
-        return <Phone size={18} color="#10b981" />;
+        return <Phone size={iconSize} color={Colors.channels.sms} />;
       case 'webchat':
-        return <MessageSquare size={18} color="#3b82f6" />;
+        return <MessageSquare size={iconSize} color={Colors.channels.webchat} />;
       case 'facebook':
-        return <Facebook size={18} color="#1877f2" />;
+        return <Facebook size={iconSize} color={Colors.channels.facebook} />;
       case 'email':
-        return <Mail size={18} color="#6366f1" />;
+        return <Mail size={iconSize} color={Colors.channels.email} />;
       default:
-        return <MessageSquare size={18} color="#6b7280" />;
+        return <MessageSquare size={iconSize} color={Colors.neutral[500]} />;
     }
   };
 
@@ -131,15 +137,16 @@ export default function ConversationScreen() {
             style={styles.backButton}
             onPress={() => router.back()}
           >
-            <ArrowLeft size={24} color="#ffffff" />
+            <ArrowLeft size={24} color={Colors.text.inverse} />
           </TouchableOpacity>
           
           <View style={styles.headerInfo}>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>
-                {customerName?.charAt(0).toUpperCase() || 'U'}
-              </Text>
-            </View>
+            <Avatar 
+              name={customerName || 'User'} 
+              size="md" 
+              backgroundColor="rgba(255, 255, 255, 0.2)"
+              textColor={Colors.text.inverse}
+            />
             <View style={styles.headerText}>
               <Text style={styles.customerName}>{customerName}</Text>
               <View style={styles.channelInfo}>
@@ -153,13 +160,13 @@ export default function ConversationScreen() {
           
           <View style={styles.headerActions}>
             <TouchableOpacity style={styles.headerButton}>
-              <Phone size={20} color="#ffffff" />
+              <Phone size={20} color={Colors.text.inverse} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.headerButton}>
-              <Info size={20} color="#ffffff" />
+              <Info size={20} color={Colors.text.inverse} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.headerButton}>
-              <MoreVertical size={20} color="#ffffff" />
+              <MoreVertical size={20} color={Colors.text.inverse} />
             </TouchableOpacity>
           </View>
         </View>
@@ -191,13 +198,13 @@ export default function ConversationScreen() {
         {/* Message Input */}
         <View style={styles.inputContainer}>
           <TouchableOpacity style={styles.attachButton}>
-            <Paperclip size={20} color="#6b7280" />
+            <Paperclip size={20} color={Colors.neutral[500]} />
           </TouchableOpacity>
           
           <TextInput
             style={styles.messageInput}
             placeholder="Type a message..."
-            placeholderTextColor="#9ca3af"
+            placeholderTextColor={Colors.neutral[400]}
             value={messageText}
             onChangeText={setMessageText}
             multiline
@@ -212,7 +219,7 @@ export default function ConversationScreen() {
             onPress={handleSendMessage}
             disabled={!messageText.trim()}
           >
-            <Send size={20} color={messageText.trim() ? "#ffffff" : "#9ca3af"} />
+            <Send size={20} color={messageText.trim() ? Colors.text.inverse : Colors.neutral[400]} />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -223,7 +230,7 @@ export default function ConversationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: Colors.background.secondary,
   },
   keyboardAvoid: {
     flex: 1,
@@ -231,87 +238,66 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#1e3a8a',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+    backgroundColor: Colors.primary[600],
+    ...Shadows.small,
   },
   backButton: {
-    padding: 8,
-    marginRight: 8,
+    padding: Spacing.sm,
+    marginRight: Spacing.sm,
   },
   headerInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
   },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  avatarText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#ffffff',
-  },
   headerText: {
     flex: 1,
+    marginLeft: Spacing.md,
   },
   customerName: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#ffffff',
-    marginBottom: 2,
+    fontSize: Typography.fontSize.base,
+    fontWeight: Typography.fontWeight.semibold,
+    fontFamily: Typography.fontFamily.medium,
+    color: Colors.text.inverse,
+    marginBottom: Spacing.xs / 2,
   },
   channelInfo: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   channelText: {
-    fontSize: 12,
+    fontSize: Typography.fontSize.xs,
+    fontFamily: Typography.fontFamily.regular,
     color: 'rgba(255, 255, 255, 0.8)',
-    marginLeft: 4,
-    fontWeight: '500',
+    marginLeft: Spacing.xs,
+    fontWeight: Typography.fontWeight.medium,
   },
   headerActions: {
     flexDirection: 'row',
-    gap: 8,
+    gap: Spacing.sm,
   },
   headerButton: {
-    padding: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 8,
+    padding: Spacing.sm,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderRadius: 12,
   },
   messagesContainer: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.background.primary,
   },
   messagesContent: {
-    paddingVertical: 16,
+    paddingVertical: Spacing.lg,
   },
   typingIndicator: {
-    paddingHorizontal: 16,
-    marginBottom: 8,
+    paddingHorizontal: Spacing.lg,
+    marginBottom: Spacing.sm,
   },
   typingBubble: {
-    backgroundColor: '#f1f5f9',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    backgroundColor: Colors.background.tertiary,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
     borderRadius: 18,
     alignSelf: 'flex-start',
     maxWidth: '70%',
@@ -319,13 +305,13 @@ const styles = StyleSheet.create({
   typingDots: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: Spacing.xs,
   },
   dot: {
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#9ca3af',
+    backgroundColor: Colors.neutral[400],
   },
   dot1: {
     opacity: 0.4,
@@ -339,36 +325,38 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#ffffff',
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+    backgroundColor: Colors.background.primary,
     borderTopWidth: 1,
-    borderTopColor: '#e5e7eb',
+    borderTopColor: Colors.border.light,
   },
   attachButton: {
-    padding: 12,
-    marginRight: 8,
+    padding: Spacing.md,
+    marginRight: Spacing.sm,
   },
   messageInput: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#d1d5db',
+    borderColor: Colors.border.medium,
     borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    fontSize: 16,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+    fontSize: Typography.fontSize.base,
+    fontFamily: Typography.fontFamily.regular,
     maxHeight: 100,
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.background.tertiary,
+    color: Colors.text.primary,
   },
   sendButton: {
-    padding: 12,
+    padding: Spacing.md,
     borderRadius: 20,
-    marginLeft: 8,
+    marginLeft: Spacing.sm,
   },
   sendButtonActive: {
-    backgroundColor: '#1e3a8a',
+    backgroundColor: Colors.primary[600],
   },
   sendButtonInactive: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: Colors.background.tertiary,
   },
 });

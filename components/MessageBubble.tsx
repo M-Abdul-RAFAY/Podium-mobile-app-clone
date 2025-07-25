@@ -6,6 +6,10 @@ import {
   Platform,
 } from 'react-native';
 import { Check, CheckCheck, Clock } from 'lucide-react-native';
+import { Colors } from '@/constants/Colors';
+import { Typography } from '@/constants/Typography';
+import { Spacing } from '@/constants/Spacing';
+import { Shadows } from '@/constants/Shadows';
 
 interface Message {
   id: string;
@@ -24,15 +28,16 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   const getStatusIcon = () => {
     if (!message.isFromUser) return null;
     
+    const iconSize = 12;
     switch (message.status) {
       case 'sent':
-        return <Clock size={12} color="#6b7280" />;
+        return <Clock size={iconSize} color={Colors.neutral[500]} />;
       case 'delivered':
-        return <Check size={12} color="#6b7280" />;
+        return <Check size={iconSize} color={Colors.neutral[500]} />;
       case 'read':
-        return <CheckCheck size={12} color="#10b981" />;
+        return <CheckCheck size={iconSize} color={Colors.success[500]} />;
       default:
-        return <Clock size={12} color="#6b7280" />;
+        return <Clock size={iconSize} color={Colors.neutral[500]} />;
     }
   };
 
@@ -68,8 +73,8 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
-    marginVertical: 2,
+    paddingHorizontal: Spacing.lg,
+    marginVertical: Spacing.xs / 2,
   },
   sentContainer: {
     alignItems: 'flex-end',
@@ -79,54 +84,46 @@ const styles = StyleSheet.create({
   },
   bubble: {
     maxWidth: '80%',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
     borderRadius: 18,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 2,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    ...Shadows.small,
   },
   sentBubble: {
-    backgroundColor: '#1e3a8a',
+    backgroundColor: Colors.primary[600],
     borderBottomRightRadius: 4,
   },
   receivedBubble: {
-    backgroundColor: '#f1f5f9',
+    backgroundColor: Colors.background.tertiary,
     borderBottomLeftRadius: 4,
   },
   messageText: {
-    fontSize: 16,
-    lineHeight: 22,
-    marginBottom: 4,
+    fontSize: Typography.fontSize.base,
+    fontFamily: Typography.fontFamily.regular,
+    lineHeight: Typography.fontSize.base * Typography.lineHeight.normal,
+    marginBottom: Spacing.xs,
   },
   sentText: {
-    color: '#ffffff',
+    color: Colors.text.inverse,
   },
   receivedText: {
-    color: '#1f2937',
+    color: Colors.text.primary,
   },
   messageFooter: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    gap: 4,
+    gap: Spacing.xs,
   },
   timestamp: {
-    fontSize: 11,
-    fontWeight: '500',
+    fontSize: Typography.fontSize.xs - 1,
+    fontFamily: Typography.fontFamily.regular,
+    fontWeight: Typography.fontWeight.medium,
   },
   sentTimestamp: {
     color: 'rgba(255, 255, 255, 0.7)',
   },
   receivedTimestamp: {
-    color: '#6b7280',
+    color: Colors.text.tertiary,
   },
 });
